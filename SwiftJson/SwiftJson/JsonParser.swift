@@ -9,7 +9,7 @@
 import Foundation
 
 /// JsonParser class
-class JsonParser {
+public class JsonParser {
     /**
      parse NSData
      
