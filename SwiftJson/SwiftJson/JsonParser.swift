@@ -18,7 +18,7 @@ public class JsonParser {
      
      - returns: Json
      */
-    class func p(data: NSData, options opt: NSJSONReadingOptions=NSJSONReadingOptions.AllowFragments) -> Json {
+    public class func p(data: NSData, options opt: NSJSONReadingOptions=NSJSONReadingOptions.AllowFragments) -> Json {
         do {
             let json = try NSJSONSerialization.JSONObjectWithData(data, options: opt)
             
@@ -39,7 +39,7 @@ public class JsonParser {
      
      - returns: Json
      */
-    class func p(string: String, encoding: NSStringEncoding=NSUTF8StringEncoding, options opt: NSJSONReadingOptions=NSJSONReadingOptions.AllowFragments) -> Json {
+    public class func p(string: String, encoding: NSStringEncoding=NSUTF8StringEncoding, options opt: NSJSONReadingOptions=NSJSONReadingOptions.AllowFragments) -> Json {
         let data = string.dataUsingEncoding(encoding)
         
         if let d = data {
