@@ -241,3 +241,19 @@ extension Json {
         return Json.NullElement
     }
 }
+
+extension Json {
+    /**
+     NullType check.
+     
+     - returns: true if NullType
+     */
+    public func isNull() -> Bool {
+        switch self.value {
+        case .NullType:
+            return true
+        default:
+            return false
+        }
+    }
+}
