@@ -1,4 +1,4 @@
-lnguage: objective-c
+language: objective-c
 osx_image: xcode7.1
 xcode_project: ./SwiftJson/SwiftJson.xcodeproj
-# xcode_scheme: SwiftJsonTests
+xcode_scheme: SwiftJsonTests
