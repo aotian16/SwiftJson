@@ -8,7 +8,7 @@ learn from
 2. [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)
 3. [Aldwych_JSON_Swift](https://github.com/sketchytech/Aldwych_JSON_Swift)
 
-![build status](https://travis-ci.org/aotian16/SwiftJson.png)
+[![Build Status](https://travis-ci.org/aotian16/SwiftJson.svg?branch=master)](https://travis-ci.org/aotian16/SwiftJson)
 
 # Demo
 
