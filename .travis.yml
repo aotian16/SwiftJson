@@ -1,4 +1,7 @@
 language: objective-c
 osx_image: xcode7.1
-xcode_project: ./SwiftJson/SwiftJson.xcodeproj
-xcode_scheme: SwiftJson
+# xcode_project: ./SwiftJson/SwiftJson.xcodeproj
+# xcode_scheme: SwiftJson
+script:
+  - xcodebuild -project SwiftJson.xcodeproj -target SwiftJson -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
+  - xcodebuild test -project SwiftJson.xcodeproj -scheme SwiftJson -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
