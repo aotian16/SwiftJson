@@ -44,8 +44,7 @@ public class JsonParser {
         
         if let d = data {
             return p(d, options: opt)
-        } else {
-            return Json.NullElement
         }
+        return Json.NullElement
     }
 }

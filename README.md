@@ -12,6 +12,8 @@ learn from
 
 # Demo
 
+**use `Json.logEnable = false` to close log print.**
+
 ``` swift
     func parseInt() {
         print("------\(__FUNCTION__)------")

@@ -10,6 +10,8 @@ import Foundation
 
 /// Json class
 public class Json {
+    /// print log when true
+    public static var logEnable: Bool = true
     /// NullElement
     public static var NullElement: Json = Json(value: nil)
     /// value of Json
@@ -221,7 +223,11 @@ extension Json {
         if let dic = dictionary {
             if let v = dic[key] {
                 return v
+            } else {
+                jsonLog("can not find value by key = \(key)")
             }
+        } else {
+            jsonLog("dictionary = nil")
         }
         return Json.NullElement
     }
@@ -236,7 +242,11 @@ extension Json {
         if let arr = array {
             if index < arr.count && index >= 0 {
                 return arr[index]
+            } else {
+                jsonLog("index error. count = \(arr.count), index = \(index)")
             }
+        } else {
+            jsonLog("array = nil")
         }
         return Json.NullElement
     }
@@ -254,6 +264,19 @@ extension Json {
             return true
         default:
             return false
+        }
+    }
+}
+
+extension Json {
+    /**
+     print log when Json.logEnable = true
+     
+     - parameter msg: message to log
+     */
+    private func jsonLog(msg: String) {
+        if Json.logEnable {
+            NSLog("SwiftJson Log: \(msg)")
         }
     }
 }

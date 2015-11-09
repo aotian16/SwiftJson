@@ -152,6 +152,7 @@ class SwiftJsonTests: XCTestCase {
         let value8: Bool? = nil
         
         XCTAssertEqual(json8.bool, value8)
+        XCTAssertEqual(json8.boolValue, false)
     }
     
     func testParseArray() {
@@ -171,6 +172,8 @@ class SwiftJsonTests: XCTestCase {
         XCTAssertEqual(json[2][arrValue3_key!].stringValue, arrValue3_value!)
         XCTAssert(!json[2].isNull())
         XCTAssert(json[3].isNull())
+        XCTAssert(json[2][0].isNull())
+        XCTAssertEqual(json[2][0].arrayValue.count, 0)
     }
     
     func testParseDictionary() {
@@ -183,6 +186,9 @@ class SwiftJsonTests: XCTestCase {
         XCTAssertEqual(json.dictionaryValue.count, 1)
         XCTAssertEqual(json[key1][2][key2].string, value)
         XCTAssertEqual(json[key1][2][key2].stringValue, value!)
+        XCTAssert(json["error key"].isNull())
+        XCTAssert(json[key1]["error key"].isNull())
+        XCTAssertEqual(json[key1]["error key"].dictionaryValue.count, 0)
     }
     
     func testParseError() {
