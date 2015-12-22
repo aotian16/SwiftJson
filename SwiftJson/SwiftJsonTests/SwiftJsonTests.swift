@@ -27,12 +27,12 @@ class SwiftJsonTests: XCTestCase {
     }
     
     func testParseInt() {
-        let str = "111"
+        let str = "{\"key\": 111}"
         let json = JsonParser.p(str)
         let value: Int? = 111
         
-        XCTAssertEqual(json.int, value)
-        XCTAssertEqual(json.intValue, value!)
+        XCTAssertEqual(json["key"].int, value)
+        XCTAssertEqual(json["key"].intValue, value!)
         
         let str1 = "abc"
         let json1 = JsonParser.p(str1)
@@ -43,12 +43,12 @@ class SwiftJsonTests: XCTestCase {
     }
     
     func testParseFloat() {
-        let str = "111.234"
+        let str = "{\"key\":111.234}"
         let json = JsonParser.p(str)
         let value: Float? = 111.234
         
-        XCTAssertEqual(json.float, value)
-        XCTAssertEqual(json.floatValue, value!)
+        XCTAssertEqual(json["key"].float, value)
+        XCTAssertEqual(json["key"].floatValue, value!)
         
         let str1 = "abc"
         let json1 = JsonParser.p(str1)
