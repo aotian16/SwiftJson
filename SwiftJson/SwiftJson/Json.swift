@@ -13,13 +13,16 @@ public class Json {
     /// print log when true
     public static var logEnable: Bool = true
     /// NullElement
-    public static var NullElement: Json = Json(value: nil)
+    public static var NullElement: Json = Json()
     /// value of Json
-    private var value: JsonValue
+    public var value: JsonValue = JsonValue.NullType
     /// cache of dictionary
     private var dictionaryCache: Dictionary<String,Json>?
     /// cache of array
     private var arrayCache: Array<Json>?
+    
+    private init() {
+    }
     
     /**
      init
@@ -28,10 +31,57 @@ public class Json {
      
      - returns: NullElement
      */
-    public init(value: AnyObject?) {
-        if value is NSNumber {
-            let v = value as! NSNumber
-            self.value = .NSNumberType(v)
+    public init(value: AnyObject) {
+        
+        if "\(value.dynamicType)" == "__NSCFBoolean" {
+            let v = value as! Bool
+            self.value = .BoolType(v)
+        } else if value is NSNumber {
+            
+            let cfnumber = value as! CFNumberRef
+            let type = CFNumberGetType(cfnumber)
+            
+            //            print(type.rawValue)
+            //            CFNumberType
+            //            kCFNumberSInt8Type
+            //            kCFNumberFloat32Type
+            switch type {
+            case CFNumberType.SInt8Type:
+                fallthrough
+            case CFNumberType.SInt16Type:
+                fallthrough
+            case CFNumberType.SInt32Type:
+                fallthrough
+            case CFNumberType.SInt64Type:
+                fallthrough
+            case CFNumberType.CharType:
+                fallthrough
+            case CFNumberType.IntType:
+                fallthrough
+            case CFNumberType.ShortType:
+                fallthrough
+            case CFNumberType.LongType:
+                fallthrough
+            case CFNumberType.LongLongType:
+                let v = value as! Int
+                self.value = .IntType(v)
+            case CFNumberType.FloatType:
+                fallthrough
+            case CFNumberType.Float32Type:
+                fallthrough
+            case CFNumberType.Float64Type:
+                fallthrough
+            case CFNumberType.CGFloatType:
+                let v = value as! Float
+                self.value = .FloatType(v)
+            case CFNumberType.DoubleType:
+                let v = value as! Double
+                self.value = .DoubleType(v)
+            default:
+                let v = value as! Int
+                self.value = .IntType(v)
+                break
+            }
         } else if value is String {
             let v = value as! String
             self.value = .StringType(v)
@@ -71,8 +121,8 @@ extension Json {
     /// int? value
     public var int: Int? {
         switch self.value {
-        case .NSNumberType(let v):
-            return v.integerValue
+        case .IntType(let v):
+            return v
         default:
             return nil
         }
@@ -87,8 +137,8 @@ extension Json {
     /// float? value
     public var float: Float? {
         switch self.value {
-        case .NSNumberType(let v):
-            return v.floatValue
+        case .FloatType(let v):
+            return v
         default:
             return nil
         }
@@ -103,8 +153,8 @@ extension Json {
     /// double value
     public var double: Double? {
         switch self.value {
-        case .NSNumberType(let v):
-            return v.doubleValue
+        case .DoubleType(let v):
+            return v
         default:
             return nil
         }
@@ -117,17 +167,29 @@ extension Json {
         return -1
     }
     /**
-    bool? value
-
+     bool? value
+     
      1. if BoolType     return bool
-     2. if NSNumberType return true when value != 0
+     2. if IntType,FloatType,DoubleType return true when value != 0
      3. if StringType   return true when value != ""
-    */
+     */
     public var bool: Bool? {
         switch self.value {
         case .BoolType(let v):
             return v
-        case .NSNumberType(let v):
+        case .IntType(let v):
+            if v == 0 {
+                return false
+            } else {
+                return true
+            }
+        case .FloatType(let v):
+            if v == 0 {
+                return false
+            } else {
+                return true
+            }
+        case .DoubleType(let v):
             if v == 0 {
                 return false
             } else {
@@ -144,12 +206,12 @@ extension Json {
         }
     }
     /**
-    bool value(default = false)
-    
-    1. if BoolType     return bool
-    2. if NSNumberType return true when value != 0
-    3. if StringType   return true when value != ""
-    */
+     bool value(default = false)
+     
+     1. if BoolType     return bool
+     2. if NSNumberType return true when value != 0
+     3. if StringType   return true when value != ""
+     */
     public var boolValue: Bool {
         if let b = bool {
             return b

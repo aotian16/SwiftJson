@@ -14,7 +14,9 @@ import Foundation
 public enum JsonValue {
     // enum cases
     case StringType(String)
-    case NSNumberType(NSNumber)
+    case IntType(Int)
+    case FloatType(Float)
+    case DoubleType(Double)
     case BoolType(Bool)
     case NullType
     
